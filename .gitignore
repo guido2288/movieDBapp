@@ -130,4 +130,4 @@ dist
 .pnp.*
 
 # Config.js (API_KEY)
-src/config.js
+.src/Config
