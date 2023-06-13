@@ -5,12 +5,89 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <link rel="stylesheet" href="./styles/app.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Box Icons -->
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <!-- Link Swiper's CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"
+    />
+
     <title>Movie DB App</title>
   </head>
   <body>
-    <h1>Movie DB APP</h1>
+    <!-- Navbar -->
+    <header>
+      <a href="#" class="logo"> <i class="bx bxs-movie"></i> Movies </a>
+      <div class="bx bx-menu" id="menu-icon"></div>
+
+      <!-- Menu -->
+      <ul class="navbar">
+        <li><a href="#home" class="home-active">Home</a></li>
+        <li><a href="#movies">Movies</a></li>
+        <li><a href="#movies-container">Coming</a></li>
+        <li><a href="#newsletter">Newsletter</a></li>
+      </ul>
+      <a href="#" class="btn">Sign In</a>
+    </header>
+
+    <!--------------- Home ----------------------------------->
+    <section class="home swiper" id="home">
+      <div class="swiper-wrapper" id="swiper-wrapper">
+        <!-- Box 1 -->
+        <!-- <div class="swiper-slide container">
+          <img src="./images/home1.jpg" alt="home1" />
+          <div class="home-text">
+            <h1>
+              Venom: Let There <br />
+              Be Carnage
+            </h1>
+            <a href="#" class="btn">See More</a>
+          </div>
+        </div> -->
+
+      <div class="swiper-pagination"></div>
+    </section>
+
+    <!-------------------- Movies -------------------->
+
+    <section class="movies" id="movies">
+      <h2 class="heading">Upcoming Movies</h2>
+      <!-- Movies Container -->
+      <div class="movies-container" id="movies-container">
+        <!-- Box 1 -->
+       
+      </div>
+    </section>
+
+    <!------------ Footer ------------------>
+    <section class="footer">
+      <a href="#" class="logo"> <i class="bx bxs-movie"></i> Movies </a>
+      <div class="social">
+        <a href="#"><i class="bx bxl-facebook"></i></a>
+        <a href="#"><i class="bx bxl-twitter"></i></a>
+        <a href="#"><i class="bx bxl-instagram"></i></a>
+        <a href="#"><i class="bx bxl-tiktok"></i></a>
+      </div>
+    </section>
+
+    <!------------ Copyright ---------------->
+
+    <div class="copyright">
+      <p>&#169; guido2288 All Right Reserved.</p>
+    </div>
 
     <script src="./src/Config/config.js"></script>
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+
+    <!-- Axios -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    
     <script src="./src/main.js"></script>
+    <script src="./src/api.js"></script>
   </body>
 </html>
