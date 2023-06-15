@@ -17,8 +17,6 @@ function navigator() {
     homePage();
   }
 
-  console.log(location.pathname)
-
   location.hash
 };
 
