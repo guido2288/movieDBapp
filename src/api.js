@@ -1,4 +1,3 @@
-
 const trendingMoviesContainer = document.getElementById('swiper-wrapper');
 const upcomingMoviesContainer = document.getElementById('movies-container');
 

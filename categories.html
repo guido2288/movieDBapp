@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <link rel="stylesheet" href="./styles/app.css" />
+    <link rel="stylesheet" href="./styles/categories.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Box Icons -->
     <link
@@ -15,52 +16,38 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"
     />
-
     <title>Movie DB App</title>
   </head>
   <body>
-    <!-- Navbar -->
     <header>
       <a href="#" class="logo"> <i class="bx bxs-movie"></i> Movies </a>
       <div class="bx bx-menu" id="menu-icon"></div>
 
       <!-- Menu -->
       <ul class="navbar">
-        <li><a href="#home" class="home-active">Home</a></li>
-        <li><a href="./categories.html">Categories</a></li>
+        <li><a href="./index.html">Home</a></li>
+        <li><a href="./categories.html" class="home-active">Categories</a></li>
         <li><a href="#movies-container">Trends</a></li>
         <li><a href="#movies-container">Upcoming</a></li>
       </ul>
       <a href="#" class="btn">Search</a>
     </header>
 
-    <!--------------- Home ----------------------------------->
-    <section class="home swiper" id="home">
-      <div class="swiper-wrapper" id="swiper-wrapper">
-        <!-- Box 1 -->
-        <!-- <div class="swiper-slide container">
-          <img src="./images/home1.jpg" alt="home1" />
-          <div class="home-text">
-            <h1>
-              Venom: Let There <br />
-              Be Carnage
-            </h1>
-            <a href="#" class="btn">See More</a>
-          </div>
-        </div> -->
-
-      <div class="swiper-pagination"></div>
-    </section>
-
-    <!-------------------- Movies -------------------->
-
     <section class="movies" id="movies">
-      <h2 class="heading">Upcoming Movies</h2>
+      <h2 class="heading category">Movies by Category</h2>
+
+      <!-- DropDown Menu -->
+      <div class="dropdown">
+        <div class="select">
+          <span class="selected">Categories</span>
+          <div class="caret"></div>
+        </div>
+        <div class="menu-dropdown"></div>
+      </div>
 
       <!-- Movies Container -->
       <div class="movies-container" id="movies-container">
         <!-- Box 1 -->
-       
       </div>
     </section>
 
@@ -89,7 +76,7 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <script src="./src/main.js"></script>
-    <script src="./src/api.js"></script>
+    <script src="./src/categories.js"></script>
     <script src="./src/navigation.js"></script>
   </body>
 </html>
