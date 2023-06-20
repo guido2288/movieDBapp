@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <link rel="stylesheet" href="./styles/app.css" />
-    <link rel="stylesheet" href="./styles/categories.css" />
+    <link rel="stylesheet" href="./styles/search.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Box Icons -->
     <link
@@ -16,9 +16,11 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"
     />
+
     <title>Movie DB App</title>
   </head>
   <body>
+    <!-- Navbar -->
     <header>
       <a href="#" class="logo"> <i class="bx bxs-movie"></i> Movies </a>
       <div class="bx bx-menu" id="menu-icon"></div>
@@ -26,29 +28,34 @@
       <!-- Menu -->
       <ul class="navbar">
         <li><a href="./index.html">Home</a></li>
-        <li><a href="./categories.html" class="home-active">Categories</a></li>
-        <li><a href="./search.html">Search</a></li>
+        <li><a href="./categories.html">Categories</a></li>
+        <li><a href="#movies-container" class="home-active">Search</a></li>
         <li><a href="#movies-container">Upcoming</a></li>
       </ul>
     </header>
 
-    <section class="movies" id="movies">
-      <h2 class="heading category">Movies by Category</h2>
+    <!-------------------- Movies -------------------->
 
-      <!-- DropDown Menu -->
-      <div class="dropdown">
-        <div class="select">
-          <span class="selected">Categories</span>
-          <div class="caret"></div>
-        </div>
-        <div class="menu-dropdown"></div>
+    <section class="movies" id="movies">
+      <h2 class="heading">Search Movies</h2>
+
+      <!------- Search Form -------->
+      <div class="search-container">
+        <form id="search-form">
+          <input
+            type="text"
+            id="search-box"
+            placeholder="Search any movie here..."
+          />
+          <button type="submit" class="search-btn">
+            <i class="bx bx-search-alt-2"></i>
+          </button>
+        </form>
       </div>
 
       <!-- Movies Container -->
       <div class="movies-container" id="movies-container">
-
-
-        </div>
+        <!-- Box 1 -->
       </div>
     </section>
 
@@ -77,7 +84,7 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <script src="./src/main.js"></script>
-    <script src="./src/categories.js"></script>
+    <script src="./src/search.js"></script>
     <script src="./src/navigation.js"></script>
   </body>
 </html>

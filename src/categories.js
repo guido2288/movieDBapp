@@ -60,7 +60,7 @@ async function getMoviesByCategory(category) {
   upcomingMoviesContainer.innerHTML = ''
 
   const movies = data.results;
-
+  console.log(movies)
 
   createMoviesContainer(movies, upcomingMoviesContainer);
 
