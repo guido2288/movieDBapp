@@ -12,6 +12,15 @@ const api = axios.create({
   },
 });
 
+const lazyLoader = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      const url = entry.target.getAttribute('data-img');
+      entry.target.setAttribute('src', url);
+    }
+  })
+});
+
 
 function createMoviesContainer(movies, container) {
   movies.forEach(movie => {
@@ -25,11 +34,14 @@ function createMoviesContainer(movies, container) {
     const movieImg = document.createElement('img');
     movieImg.setAttribute('alt', movie.title);
 
-    if (window.innerWidth < 770) {
-      movieImg.setAttribute('src', `https://image.tmdb.org/t/p/w300${movie.poster_path}`);
+
+    if (!movie.poster_path) {
+      movieImg.setAttribute('data-img', `../images/imagen.png`);
+      movieImg.style.objectFit = 'contain';
     } else {
-      movieImg.setAttribute('src', `https://image.tmdb.org/t/p/w300${movie.poster_path}`);
+      movieImg.setAttribute('data-img', `https://image.tmdb.org/t/p/w300${movie.poster_path}`); //src
     }
+
 
     boxImg.appendChild(movieImg);
 
@@ -39,13 +51,15 @@ function createMoviesContainer(movies, container) {
     const releaseDate = document.createElement('span');
     releaseDate.innerText = movie.release_date;
 
+    lazyLoader.observe(movieImg)
+
     box.appendChild(boxImg);
     box.appendChild(movieTitle);
     box.appendChild(releaseDate);
     container.appendChild(box)
 
   });
-}
+};
 
 async function getMoviesByCategory(category) {
 
@@ -57,7 +71,8 @@ async function getMoviesByCategory(category) {
     },
   });
 
-  upcomingMoviesContainer.innerHTML = ''
+  upcomingMoviesContainer.innerHTML = '';
+
 
   const movies = data.results;
   console.log(movies)
