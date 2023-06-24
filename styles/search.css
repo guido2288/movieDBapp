@@ -1,8 +1,8 @@
 .search-container {
   margin-top: 20px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
+  width: 30%;
+  margin-left: auto;
+  margin-right: auto;
 }
 #search-form {
   width: 100%;
@@ -39,4 +39,17 @@
   height: 60px;
   cursor: pointer;
   background: transparent;
+}
+@media (max-width: 970px) {
+  .search-container {
+    width: 75%;
+  }
+}
+@media (max-width: 450px) {
+  .search-container {
+    width: 75%;
+  }
+  #search-form input {
+    width: 50%;
+  }
 }

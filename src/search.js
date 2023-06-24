@@ -2,6 +2,8 @@ const movieContainer = document.getElementById('movies-container');
 const searchForm = document.getElementById('search-form');
 const searchBox = document.getElementById('search-box');
 
+let maxPage;
+let page = 1;
 
 const api = axios.create({
   baseURL: 'https://api.themoviedb.org/3/',
@@ -46,8 +48,6 @@ function createMoviesContainer(movies, container) {
       movieImg.setAttribute('data-img', `https://image.tmdb.org/t/p/w300${movie.poster_path}`); //src
     }
 
-    console.log(movie.poster_path)
-
     boxImg.appendChild(movieImg);
 
     const movieTitle = document.createElement('h3');
@@ -64,19 +64,41 @@ function createMoviesContainer(movies, container) {
     container.appendChild(box)
 
   });
+
+  if (maxPage !== page) {
+    const btnLoadMore = document.createElement('button');
+    btnLoadMore.innerText = 'Load More...';
+    btnLoadMore.classList.add('btn');
+
+    btnLoadMore.addEventListener('click', () => {
+
+      btnLoadMore.style.display = 'none'
+      return getMoviesBySearch(searchBox.value, page + 1, false)
+    })
+
+    container.appendChild(btnLoadMore)
+  }
+
+
+
+
 }
 
-async function getMoviesBySearch(query) {
+async function getMoviesBySearch(query, page, clean = true) {
 
-  const { data } = await api(`/search/movie?query=${query}`, {
+  const { data } = await api(`/search/movie?}`, {
     params: {
       query,
+      page
     },
   });
 
-  movieContainer.innerHTML = ''
-
   const movies = data.results;
+  maxPage = data.total_pages;
+
+  if (clean) {
+    movieContainer.innerHTML = '';
+  }
 
 
   createMoviesContainer(movies, movieContainer);

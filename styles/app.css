@@ -104,7 +104,9 @@ header.shadow .navbar a {
   background: var(--main-color);
   color: var(--bg-color);
   font-weight: 400;
+  border: none;
   border-radius: 0.5rem;
+  cursor: pointer;
 }
 .btn:hover {
   background: var(--hover-color);

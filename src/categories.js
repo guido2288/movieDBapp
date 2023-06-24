@@ -1,5 +1,4 @@
-const trendingMoviesContainer = document.getElementById('swiper-wrapper');
-const upcomingMoviesContainer = document.getElementById('movies-container');
+const categoryMoviesContainer = document.getElementById('movies-container');
 const dropdown = document.querySelector('.dropdown');
 
 const api = axios.create({
@@ -22,7 +21,7 @@ const lazyLoader = new IntersectionObserver((entries) => {
 });
 
 
-function createMoviesContainer(movies, container) {
+function createMoviesContainer(movies, container, category, page) {
   movies.forEach(movie => {
 
     const box = document.createElement('div');
@@ -59,25 +58,40 @@ function createMoviesContainer(movies, container) {
     container.appendChild(box)
 
   });
+
+
+
+  const btnLoadMore = document.createElement('button');
+  btnLoadMore.innerText = 'Load More...';
+  btnLoadMore.classList.add('btn')
+  btnLoadMore.addEventListener('click', () => {
+
+    console.log(page)
+    btnLoadMore.style.display = 'none'
+    return getMoviesByCategory(category, page + 1, false)
+  })
+
+  container.appendChild(btnLoadMore)
 };
 
-async function getMoviesByCategory(category) {
 
-  let page = 0;
 
-  const { data } = await api(`discover/movie?with_genres${page}`, {
+async function getMoviesByCategory(category, page = 1, clean = true) {
+
+  const { data } = await api(`discover/movie?with_genres&`, {
     params: {
       with_genres: category,
+      page: page,
     },
   });
 
-  upcomingMoviesContainer.innerHTML = '';
-
+  if (clean) {
+    categoryMoviesContainer.innerHTML = '';
+  }
 
   const movies = data.results;
-  console.log(movies)
 
-  createMoviesContainer(movies, upcomingMoviesContainer);
+  createMoviesContainer(movies, categoryMoviesContainer, category, page);
 
 };
 
@@ -102,8 +116,6 @@ async function getCategories() {
 
   categories.forEach(category => {
 
-
-
     const option = document.createElement('span');
     option.innerText = category.name
     menu.appendChild(option)
@@ -127,4 +139,4 @@ async function getCategories() {
 
 };
 
-getCategories()
+getCategories();
