@@ -1,6 +1,8 @@
 const movieContainer = document.getElementById('movies-container');
 const searchForm = document.getElementById('search-form');
 const searchBox = document.getElementById('search-box');
+const popupModal = document.getElementById('popup');
+const modalInfoContainer = document.getElementById('popup-info');
 
 let maxPage;
 let page = 1;
@@ -19,6 +21,63 @@ searchForm.addEventListener('submit', (e) => {
   e.preventDefault()
   getMoviesBySearch(searchBox.value)
 });
+
+// Function to create modalInfo
+async function createMovieInfo(id) {
+
+  const { data } = await api(`movie/${id}`)
+
+  const movie = data;
+  console.log(movie)
+
+  popupModal.classList.toggle('active');
+
+  const movieImgModal = document.createElement('img');
+
+  movieImgModal.setAttribute('src', `https://image.tmdb.org/t/p/w1280${movie.backdrop_path}`);
+  movieImgModal.setAttribute('alt', movie.title);
+
+  const movieTitle = document.createElement('h3');
+  movieTitle.innerText = movie.title;
+
+  const movieDate = document.createElement('span');
+  movieDate.innerText = movie.release_date;
+
+  const movieInfo = document.createElement('p');
+  movieInfo.innerText = movie.overview;
+
+  const genresContainer = document.createElement('ul');
+  genresContainer.className = 'popup-genres';
+
+  const closeModalBtn = document.createElement('i');
+  closeModalBtn.className = 'bx bx-x';
+
+
+  modalInfoContainer.appendChild(movieImgModal)
+  modalInfoContainer.appendChild(movieTitle);
+  modalInfoContainer.appendChild(closeModalBtn);
+  modalInfoContainer.appendChild(movieDate);
+  modalInfoContainer.appendChild(movieInfo);
+  modalInfoContainer.appendChild(genresContainer);
+
+  movie.genres.forEach(genre => {
+    const genreItem = document.createElement('li');
+    genreItem.innerText = genre.name;
+    genreItem.className = 'btn'
+
+    genresContainer.appendChild(genreItem)
+  });
+
+  movieContainer.classList.toggle('blur')
+
+
+  closeModalBtn.addEventListener('click', () => {
+    popupModal.classList.toggle('active')
+    movieContainer.classList.toggle('blur');
+    modalInfoContainer.innerHTML = ''
+  })
+
+};
 
 const lazyLoader = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
@@ -61,7 +120,12 @@ function createMoviesContainer(movies, container) {
     box.appendChild(boxImg);
     box.appendChild(movieTitle);
     box.appendChild(releaseDate);
-    container.appendChild(box)
+    container.appendChild(box);
+
+
+    box.addEventListener('click', () => {
+      return createMovieInfo(movie.id)
+    })
 
   });
 

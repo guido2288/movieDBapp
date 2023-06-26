@@ -1,5 +1,7 @@
 const trendingMoviesContainer = document.getElementById('swiper-wrapper');
 const upcomingMoviesContainer = document.getElementById('movies-container');
+const popupModal = document.getElementById('popup');
+const modalInfoContainer = document.getElementById('popup-info');
 
 const api = axios.create({
   baseURL: 'https://api.themoviedb.org/3/',
@@ -10,6 +12,66 @@ const api = axios.create({
     'api_key': API_KEY,
   },
 });
+
+
+
+async function createMovieInfo(id) {
+
+  const { data } = await api(`movie/${id}`)
+
+  const movie = data;
+  console.log(movie)
+
+  popupModal.classList.toggle('active');
+
+  const movieImgModal = document.createElement('img');
+
+  movieImgModal.setAttribute('src', `https://image.tmdb.org/t/p/w1280${movie.backdrop_path}`);
+  movieImgModal.setAttribute('alt', movie.title);
+
+  const movieTitle = document.createElement('h3');
+  movieTitle.innerText = movie.title;
+
+  const movieDate = document.createElement('span');
+  movieDate.innerText = movie.release_date;
+
+  const movieInfo = document.createElement('p');
+  movieInfo.innerText = movie.overview;
+
+  const genresContainer = document.createElement('ul');
+  genresContainer.className = 'popup-genres';
+
+  const closeModalBtn = document.createElement('i');
+  closeModalBtn.className = 'bx bx-x';
+
+
+  modalInfoContainer.appendChild(movieImgModal)
+  modalInfoContainer.appendChild(movieTitle);
+  modalInfoContainer.appendChild(closeModalBtn);
+  modalInfoContainer.appendChild(movieDate);
+  modalInfoContainer.appendChild(movieInfo);
+  modalInfoContainer.appendChild(genresContainer);
+
+  movie.genres.forEach(genre => {
+    const genreItem = document.createElement('li');
+    genreItem.innerText = genre.name;
+    genreItem.className = 'btn'
+
+    genresContainer.appendChild(genreItem)
+  });
+
+  upcomingMoviesContainer.classList.toggle('blur')
+  trendingMoviesContainer.classList.toggle('blur')
+
+  closeModalBtn.addEventListener('click', () => {
+    popupModal.classList.toggle('active')
+    upcomingMoviesContainer.classList.toggle('blur');
+    trendingMoviesContainer.classList.toggle('blur');
+    modalInfoContainer.innerHTML = ''
+  })
+
+};
+
 
 async function getTrendingMoviesPreview() {
   const { data } = await api('trending/movie/week?');
@@ -57,6 +119,12 @@ async function getTrendingMoviesPreview() {
 
 
     trendingMoviesContainer.appendChild(trendingMovie);
+
+    btnSeeMore.addEventListener('click', () => {
+      return createMovieInfo(movie.id)
+    })
+
+
   });
 
 };
@@ -95,7 +163,11 @@ async function getUpcoming() {
     box.appendChild(boxImg);
     box.appendChild(movieTitle);
     box.appendChild(releaseDate);
-    upcomingMoviesContainer.appendChild(box)
+    upcomingMoviesContainer.appendChild(box);
+
+    box.addEventListener('click', () => {
+      return createMovieInfo(movie.id)
+    })
 
   })
 
