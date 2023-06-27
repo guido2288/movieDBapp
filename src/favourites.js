@@ -2,6 +2,7 @@ const favoritesMoviesContainer = document.getElementById('movies-container');
 const popupModal = document.getElementById('popup');
 const modalInfoContainer = document.getElementById('popup-info');
 
+
 //Busca FavMovies
 const favouritesMovies = JSON.parse(localStorage.getItem('liked_movies'));
 const favouritesMoviesArray = Object.values(favouritesMovies);

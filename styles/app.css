@@ -195,6 +195,7 @@ header.shadow .navbar a {
   transition: 0.5s;
   max-width: 968px;
   min-width: 300px;
+  max-height: 100vh;
   box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
   background: var(--text-color);
   color: var(--bg-color);
@@ -372,7 +373,7 @@ ul {
     row-gap: 1rem;
   }
 }
-@media (max-width: 370px) {
+@media (max-width: 400px) {
   header {
     padding: 6px 4%;
   }

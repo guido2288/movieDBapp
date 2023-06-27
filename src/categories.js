@@ -10,6 +10,7 @@ const api = axios.create({
   },
   params: {
     'api_key': API_KEY,
+    "language": navigator.language
   },
 });
 
@@ -57,7 +58,6 @@ async function createMovieInfo(id) {
   const { data } = await api(`movie/${id}`)
 
   const movie = data;
-  console.log(movie)
 
   popupModal.classList.toggle('active');
 
@@ -173,7 +173,6 @@ function createMoviesContainer(movies, container, category, page) {
   btnLoadMore.classList.add('btn')
   btnLoadMore.addEventListener('click', () => {
 
-    console.log(page)
     btnLoadMore.style.display = 'none'
     return getMoviesByCategory(category, page + 1, false)
   })

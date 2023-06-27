@@ -14,6 +14,7 @@ const api = axios.create({
   },
   params: {
     'api_key': API_KEY,
+    "language": navigator.language
   },
 });
 
@@ -57,7 +58,6 @@ async function createMovieInfo(id) {
   const { data } = await api(`movie/${id}`)
 
   const movie = data;
-  console.log(movie)
 
   popupModal.classList.toggle('active');
 

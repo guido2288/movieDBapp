@@ -10,6 +10,7 @@ const api = axios.create({
   },
   params: {
     'api_key': API_KEY,
+    "language": navigator.language
   },
 });
 
@@ -135,7 +136,7 @@ async function getTrendingMoviesPreview() {
     const btnSeeMore = document.createElement('a');
     btnSeeMore.classList.add('btn')
     btnSeeMore.setAttribute('href', '#')
-    btnSeeMore.innerText = "See More";
+    btnSeeMore.innerText = "Ver más...";
 
 
 
