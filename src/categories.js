@@ -13,6 +13,35 @@ const api = axios.create({
   },
 });
 
+// Local Storage
+const favouritesMovies = JSON.parse(localStorage.getItem('liked_movies'));
+// devuelve el array de pelis fav
+function likedMovieList() {
+
+  let movies;
+
+  if (favouritesMovies) {
+    movies = favouritesMovies;
+  } else {
+    movies = {};
+  };
+
+  return movies;
+};
+
+function likeMovie(movie) {
+
+  const likedMovies = likedMovieList();
+
+  if (likedMovies[movie.id]) {
+    likedMovies[movie.id] = undefined;
+  } else {
+    likedMovies[movie.id] = movie;
+  }
+
+  localStorage.setItem('liked_movies', JSON.stringify(likedMovies))
+}
+
 const lazyLoader = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
@@ -109,15 +138,30 @@ function createMoviesContainer(movies, container, category, page) {
     const releaseDate = document.createElement('span');
     releaseDate.innerText = movie.release_date;
 
-    lazyLoader.observe(movieImg)
+    lazyLoader.observe(movieImg);
+
+    const likeBtn = document.createElement('i');
+    //bx bx-heart and bx bxs-heart
+    if (likedMovieList()[movie.id]) {
+      likeBtn.className = 'bx bxs-heart';
+    } else {
+      likeBtn.className = 'bx bx-heart';
+    }
+
+    likeBtn.addEventListener('click', () => {
+
+      likeBtn.className === 'bx bx-heart' ? likeBtn.className = 'bx bxs-heart' : likeBtn.className = 'bx bx-heart'
+      likeMovie(movie);
+    });
 
     box.appendChild(boxImg);
     box.appendChild(movieTitle);
     box.appendChild(releaseDate);
+    box.appendChild(likeBtn);
     container.appendChild(box);
 
 
-    box.addEventListener('click', () => {
+    boxImg.addEventListener('click', () => {
       return createMovieInfo(movie.id)
     })
   });

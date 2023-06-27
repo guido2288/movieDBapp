@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <link rel="stylesheet" href="./styles/app.css" />
-    <link rel="stylesheet" href="./styles/search.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Box Icons -->
     <link
@@ -16,11 +15,9 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"
     />
-
     <title>Movie DB App</title>
   </head>
   <body>
-    <!-- Navbar -->
     <header>
       <a href="./index.html" class="logo">
         <i class="bx bxs-movie"></i> Movies
@@ -31,34 +28,16 @@
       <ul class="navbar">
         <li><a href="./index.html">Home</a></li>
         <li><a href="./categories.html">Categories</a></li>
-        <li><a href="./search.html" class="home-active">Search</a></li>
-        <li><a href="./favorites.html">Favorites</a></li>
+        <li><a href="./search.html">Search</a></li>
+        <li><a href="./favorites.html" class="home-active">Favorites</a></li>
       </ul>
     </header>
 
-    <!-------------------- Movies -------------------->
-
     <section class="movies" id="movies">
-      <h2 class="heading">Search Movies</h2>
-
-      <!------- Search Form -------->
-      <div class="search-container">
-        <form id="search-form">
-          <input
-            type="text"
-            id="search-box"
-            placeholder="Search any movie here..."
-          />
-          <button type="submit" class="search-btn">
-            <i class="bx bx-search-alt-2"></i>
-          </button>
-        </form>
-      </div>
+      <h2 class="heading category">My Favorites Movies</h2>
 
       <!-- Movies Container -->
-      <div class="movies-container" id="movies-container">
-        <!-- Box 1 -->
-      </div>
+      <div class="movies-container" id="movies-container"></div>
 
       <!-- Modal -->
       <div class="popup" id="popup">
@@ -91,6 +70,6 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <script src="./src/main.js"></script>
-    <script src="./src/search.js"></script>
+    <script src="./src/favourites.js"></script>
   </body>
 </html>

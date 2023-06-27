@@ -8,12 +8,12 @@ window.addEventListener('scroll', () => {
 
 menu.onclick = () => {
   menu.classList.toggle('bx-x');
-  navbar.classList.toggle('active');
+  navbar.classList.toggle('actived');
 };
 
 window.onscroll = () => {
   menu.classList.remove('bx-x');
-  navbar.classList.remove('active');
+  navbar.classList.remove('actived');
 }
 
 var swiper = new Swiper(".home", {

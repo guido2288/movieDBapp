@@ -1,29 +1,11 @@
-const movieContainer = document.getElementById('movies-container');
-const searchForm = document.getElementById('search-form');
-const searchBox = document.getElementById('search-box');
+const favoritesMoviesContainer = document.getElementById('movies-container');
 const popupModal = document.getElementById('popup');
 const modalInfoContainer = document.getElementById('popup-info');
 
-let maxPage;
-let page = 1;
-
-const api = axios.create({
-  baseURL: 'https://api.themoviedb.org/3/',
-  headers: {
-    'Content-Type': 'application/json;charset=utf-8',
-  },
-  params: {
-    'api_key': API_KEY,
-  },
-});
-
-searchForm.addEventListener('submit', (e) => {
-  e.preventDefault()
-  getMoviesBySearch(searchBox.value)
-});
-
-// Local Storage
+//Busca FavMovies
 const favouritesMovies = JSON.parse(localStorage.getItem('liked_movies'));
+const favouritesMoviesArray = Object.values(favouritesMovies);
+
 // devuelve el array de pelis fav
 function likedMovieList() {
 
@@ -48,16 +30,12 @@ function likeMovie(movie) {
     likedMovies[movie.id] = movie;
   }
 
-  localStorage.setItem('liked_movies', JSON.stringify(likedMovies))
+  localStorage.setItem('liked_movies', JSON.stringify(likedMovies));
+  location.reload();
 }
 
-// Function to create modalInfo
-async function createMovieInfo(id) {
-
-  const { data } = await api(`movie/${id}`)
-
-  const movie = data;
-  console.log(movie)
+// Create movie for Movie Modal
+function createMovieInfo(movie) {
 
   popupModal.classList.toggle('active');
 
@@ -89,35 +67,19 @@ async function createMovieInfo(id) {
   modalInfoContainer.appendChild(movieInfo);
   modalInfoContainer.appendChild(genresContainer);
 
-  movie.genres.forEach(genre => {
-    const genreItem = document.createElement('li');
-    genreItem.innerText = genre.name;
-    genreItem.className = 'btn'
-
-    genresContainer.appendChild(genreItem)
-  });
-
-  movieContainer.classList.toggle('blur')
+  favoritesMoviesContainer.classList.toggle('blur')
 
 
   closeModalBtn.addEventListener('click', () => {
     popupModal.classList.toggle('active')
-    movieContainer.classList.toggle('blur');
+    favoritesMoviesContainer.classList.toggle('blur');
     modalInfoContainer.innerHTML = ''
-  })
+  });
 
 };
 
-const lazyLoader = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      const url = entry.target.getAttribute('data-img');
-      entry.target.setAttribute('src', url);
-    }
-  })
-});
+function createMoviesContainer(movies) {
 
-function createMoviesContainer(movies, container) {
   movies.forEach(movie => {
 
     const box = document.createElement('div');
@@ -129,12 +91,14 @@ function createMoviesContainer(movies, container) {
     const movieImg = document.createElement('img');
     movieImg.setAttribute('alt', movie.title);
 
+
     if (!movie.poster_path) {
-      movieImg.setAttribute('data-img', `../images/imagen.png`);
+      movieImg.setAttribute('src', `../images/imagen.png`);
       movieImg.style.objectFit = 'contain';
     } else {
-      movieImg.setAttribute('data-img', `https://image.tmdb.org/t/p/w300${movie.poster_path}`); //src
+      movieImg.setAttribute('src', `https://image.tmdb.org/t/p/w300${movie.poster_path}`); //src
     }
+
 
     boxImg.appendChild(movieImg);
 
@@ -158,57 +122,18 @@ function createMoviesContainer(movies, container) {
       likeMovie(movie);
     });
 
-    lazyLoader.observe(movieImg)
-
     box.appendChild(boxImg);
     box.appendChild(movieTitle);
     box.appendChild(releaseDate);
-    box.appendChild(likeBtn);
-    container.appendChild(box);
+    box.appendChild(likeBtn)
+    favoritesMoviesContainer.appendChild(box);
 
 
     boxImg.addEventListener('click', () => {
-      return createMovieInfo(movie.id)
+      return createMovieInfo(movie)
     })
-
   });
-
-  if (maxPage !== page) {
-    const btnLoadMore = document.createElement('button');
-    btnLoadMore.innerText = 'Load More...';
-    btnLoadMore.classList.add('btn');
-
-    btnLoadMore.addEventListener('click', () => {
-
-      btnLoadMore.style.display = 'none'
-      return getMoviesBySearch(searchBox.value, page + 1, false)
-    })
-
-    container.appendChild(btnLoadMore)
-  }
-
-
-
-
-}
-
-async function getMoviesBySearch(query, page, clean = true) {
-
-  const { data } = await api(`/search/movie?}`, {
-    params: {
-      query,
-      page
-    },
-  });
-
-  const movies = data.results;
-  maxPage = data.total_pages;
-
-  if (clean) {
-    movieContainer.innerHTML = '';
-  }
-
-
-  createMoviesContainer(movies, movieContainer);
 
 };
+
+createMoviesContainer(favouritesMoviesArray)
